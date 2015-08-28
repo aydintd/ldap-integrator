@@ -1,0 +1,3 @@
+## NSCD Handler 
+- name: restart-nscd
+  service: name=nscd state=restarted

@@ -1,0 +1,16 @@
+## These are your ldap variables, you feel free to change these values whatever you want/need.
+
+base_dn: 'dc=aydintd,dc=net'
+ldap_server: '192.168.5.2'
+ldap_version: '3'
+pam_password_type: 'exop'
+bind_policy_type: 'hard'
+nss_reconnect_tries: '2'
+nss_reconnect_sleeptime: '1'
+nss_reconnect_maxsleeptime: '8'
+nss_reconnect_maxconntries: '3'
+
+ns_passwd_entry: 'files ldap [NOTFOUND=return] db'
+ns_group_entry: 'files ldap [NOTFOUND=return] db'
+ns_shadow_entry: 'files ldap'
+ns_netgroup_entry: 'ldap'

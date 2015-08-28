@@ -1,0 +1,6 @@
+- hosts: ldapclients
+  remote_user: admin
+  sudo: yes
+  roles:
+  - base
+  - integrateldap

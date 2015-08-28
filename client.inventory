@@ -1,0 +1,11 @@
+# Its your ansible ldap client inventory, you need to specify the ip address information below about which
+# clients you want to integrate with your ldap server.
+# 
+# Example :
+#
+# [ldapclients]
+# 192.168.5.5 ansible_python_interpreter=/usr/bin/python
+# 192.168.5.2 ansible_python_interpreter=/usr/bin/python
+# 
+# [ldapclients:vars]
+# ssh_args = -F ~/.ssh/config 

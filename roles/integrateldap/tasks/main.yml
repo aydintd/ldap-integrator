@@ -1,0 +1,48 @@
+---
+## Install necessarry packages for ldap integration.
+
+- name: Install base packages for ldap integration
+  apt: pkg="{{item}}" state=present update_cache=true
+
+  with_items:
+      - libnss-ldap
+      - libpam-ldap
+      - nslcd
+      - nss-updatedb
+      - libnss-db
+      - libpam-ccreds
+
+## Make sure you get all necessary configuration files in your clients' /etc folder.
+
+- name: Deploy libnss config
+  template: src=libnss-ldap.conf.j2 dest=/etc/libnss-ldap.conf
+
+- name: Deploy pamldap config
+  template: src=pam_ldap.conf.j2 dest=/etc/pam_ldap.conf
+
+- name: Deploy nslcd config
+  template: src=nslcd.conf.j2 dest=/etc/nslcd.conf
+
+- name: Deploy nsswitch config
+  template: src=nsswitch.conf.j2 dest=/etc/nsswitch.conf
+
+- name: Copy pam.d configs
+  copy: src="{{item}}" dest=/etc/pam.d
+
+  with_items:
+      - common-account
+      - common-auth
+      - common-password
+      - common-session
+      - common-session-noninteractive 
+
+- name: Create netgroup file
+  command: touch /etc/netgroup
+  args:
+      creates: /etc/netgroup
+  notify: restart-nscd  
+
+## Make sure you can get ldap credential caches to local.
+
+- name: Execute nss-updatedb to cache credentials
+  command: /usr/sbin/nss_updatedb ldap 

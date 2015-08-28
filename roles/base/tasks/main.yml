@@ -1,0 +1,36 @@
+---
+
+## Make sure you have admin user-group to manage your ldap configurations (it must be a sudo user)
+
+- name: Create admin group
+  group: name=admin state=present 
+
+## Default admin user password is '123123' if you want to change it, you can generate a password with this command : mkpasswd -m SHA-512
+# and copy-paste mkpasswd output to the password key.
+
+- name: Create admin user
+  user: name=admin state=present comment="admin user" shell=/bin/bash groups="{{item}}" append=yes
+      password=$6$2zBeafVRgFWug1$nnnmdGpj51sar4IH3HpTJMqTBP/y5hT0xxYOlPl5LPG4NZPEpED2DyoUYvIEdbq8b9vXo.Z.dLzFYggCCT1ua1
+
+  with_items:
+      - sudo
+      - admin
+
+## You can add your own ssh public key to this user's authorized_keys.
+
+- name: Copy our ssh keys
+  authorized_key: user=admin
+                  key="{{item}}"
+  with_file:
+    - public_keys/aydin
+
+## You can install some base packages
+
+- name: Install useful base packages
+  apt: pkg="{{item}}" state=present update_cache=yes
+
+  with_items:
+      - sudo
+      - vim
+      - rsync
+      - htop

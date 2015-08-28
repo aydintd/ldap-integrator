@@ -2,7 +2,7 @@
 
 Note : Only Tested on Debian 8 (Jessie) and Pardus Kurumsal 5 Operating Systems.
 
-It makes sure your ldap clients will be integrated with your LDAP server and make sure all LDAP users can login to their client machines with their LDAP username/password.
+It makes sure your ldap clients will be integrated with your LDAP server using libnss-ldap and pam-ldap libraries backend and make sure all LDAP users can login to their client machines with their LDAP username/password.
 Also it gives cache support away to your LDAP users. (via lib-ccreds)
 
 ### Usage :
